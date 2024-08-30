@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Fetch Example</title>
+</head>
+<body>
+    <h1>Fetch Example</h1>
+    <p style='font-weight:bold' id="response"></p>
+    <button id='ShowData'>Premere per info</button>
+
+    <script>
+        let ShowData = document.getElementById('ShowData');
+        ShowData.onclick = function() {
+            fetch('http://127.0.0.1:8000/items')  // esecuzione della richiesta
+                .then(response => response.json())
+                .then(data => {
+                    console.log(data);
+                    const itemsHtml = data.items.map(item => { return item.name+' | '+item.description+' | '+item.price+'€'});
+                    //per ogni elemento dell'oggetto ne viene inserito uno nell'array itemsHtml
+                    //nel nuovo array ritorna il dato letto con map con una ', ' come join
+                    document.getElementById('response').innerHTML = itemsHtml.join('<br>');
+                });
+        }
+    </script>
+</body>
+</html>
