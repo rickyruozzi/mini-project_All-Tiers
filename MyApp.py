@@ -11,6 +11,7 @@ import logging
 from bson import ObjectId
 from starlette.responses import HTMLResponse
 from starlette.requests import Request
+from fastapi.responses import FileResponse
 
 app = FastAPI()
 
@@ -70,6 +71,11 @@ class item_id(BaseModel):
             raise ValueError('id must not be empty')
         return v
 
+favicon_path = 'favicon.ico'
+
+@app.get('/favicon.ico', include_in_schema=False)
+async def favicon():
+    return FileResponse(favicon_path)
 
 @app.post('/add_item')
 def add_item(item: Item):
